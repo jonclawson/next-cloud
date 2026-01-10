@@ -19,6 +19,6 @@ services:
         apt-get update && apt-get install -y git
         # npm create cloudflare@latest app --framework=next
         # npm i
-        echo "Container ready. Starting development server..."
+        echo "Container ready."
         # npm run dev
         tail -f /dev/null
