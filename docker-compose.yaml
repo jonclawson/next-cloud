@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  nextcloud:
+    image: node:20-slim
+    ports: 
+      - "8080:3000"
+    working_dir: /app
+    volumes:
+      - ./:/app:delegated
+      - /app/node_modules  
+      - /app/.next  
+    command:
+      - sh 
+      - -c 
+      - |
+        # Update and install git
+        apt-get update && apt-get install -y git
+        npm i pnpm -g
+        # pnpm create cloudflare@latest app --framework=next
+        echo "Container ready. Run 'pnpm create cloudflare@latest' inside the shell."
+        tail -f /dev/null
