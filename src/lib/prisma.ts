@@ -1,9 +1,19 @@
+import { PrismaClient } from '@prisma/client'
 import { PrismaNeon } from '@prisma/adapter-neon'
-import { PrismaClient } from '@prisma/client' // Use your custom output path
+import { Pool } from '@neondatabase/serverless'
 
-// Pass connection string directly to the adapter
-const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! })
+const prismaClientSingleton = () => {
+  const neon = new Pool({ connectionString: process.env.DATABASE_URL })
+  const adapter = new PrismaNeon(neon)
+  return new PrismaClient({ adapter })
+}
 
-// Instantiate the client with the adapter
-const prisma = new PrismaClient({ adapter })
+declare global {
+  var prisma: undefined | ReturnType<typeof prismaClientSingleton>
+}
+
+const prisma = globalThis.prisma ?? prismaClientSingleton()
+
 export default prisma
+
+if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma
