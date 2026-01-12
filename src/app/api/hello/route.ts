@@ -5,7 +5,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 declare global {
   interface CloudflareEnv {
-    NEXT_CLOUD_R2_BUCKET: any;
+    NEXT_CLOUD_R2_BUCKET: R2Bucket;
   }
 }
 
@@ -14,7 +14,7 @@ export async function GET() {
   try {
     const { env } = await getCloudflareContext();
     const key = "next.png";
-    const object = await env.NEXT_CLOUD_R2_BUCKET?.get(key);
+    const object = await env?.NEXT_CLOUD_R2_BUCKET?.get(key);
     const [setting] = await db
       .select()
       .from(schema.settings)

@@ -8,8 +8,7 @@ declare namespace Cloudflare {
 	}
 }
 interface CloudflareEnv extends Cloudflare.Env {
-  NEXT_CLOUD_R2_BUCKET: any;
-  MY_R2_BUCKET: any;
+  NEXT_CLOUD_R2_BUCKET: R2Bucket;
 }
 
 // Begin runtime types
