@@ -1,15 +1,15 @@
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import { Pool, neonConfig } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
+import { neon, neonConfig } from '@neondatabase/serverless';
 import ws from 'ws';
 import { settings } from './schema';
 import { eq } from 'drizzle-orm';
 
-// Configure WebSocket for Node.js environment
+// Configure WebSocket for Node.js environment (for local dev)
 neonConfig.webSocketConstructor = ws;
 
 async function main() {
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
-  const db = drizzle(pool, { schema: { settings } });
+  const sql = neon(process.env.DATABASE_URL!);
+  const db = drizzle(sql, { schema: { settings } });
 
   console.log('🌱 Starting seed...');
 
@@ -27,8 +27,6 @@ async function main() {
   }
 
   console.log('✅ Seeding finished.');
-  
-  await pool.end();
 }
 
 main()
