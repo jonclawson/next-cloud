@@ -4,15 +4,17 @@ import { eq } from 'drizzle-orm'
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 declare global {
-  var NEXT_CLOUD_R2_BUCKET: R2Bucket;
+  interface CloudflareEnv {
+    NEXT_CLOUD_R2_BUCKET: any;
+  }
 }
 
+
 export async function GET() {
-  const { env } = await getCloudflareContext();
-  const bucket = env.NEXT_CLOUD_R2_BUCKET; 
-  const key = "next.png";
-  const object = await bucket.get(key);
   try {
+    const { env } = await getCloudflareContext();
+    const key = "next.png";
+    const object = await env.NEXT_CLOUD_R2_BUCKET?.get(key);
     const [setting] = await db
       .select()
       .from(schema.settings)
