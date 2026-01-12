@@ -1,53 +1,50 @@
-"use client"
+import { auth } from "@/lib/auth";
+import { LoginForm } from "@/components/login-form";
+import { LogoutButton } from "@/components/logout-button";
+import { HelloContent } from "@/components/hello-content";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
+export default async function Home() {
+  const session = await auth();
 
-export default function Home() {
-	const [message, setMessage] = useState<string | null>(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-	const [image, setImage] = useState<string | null>(null);
-
-	type HelloResponse = { message: string; image: string | null };
-
-	useEffect(() => {
-		let mounted = true;
-		(async () => {
-			try {
-				const res = await fetch('/api/hello');
-				if (!res.ok) throw new Error(`status ${res.status}`);
-				const data = (await res.json()) as HelloResponse;
-				if (mounted) {
-          setMessage(data.message ?? String(data));
-          setImage(data.image ?? null);
-        }
-			} catch (err: unknown) {
-				const msg = err instanceof Error ? err.message : String(err);
-				if (mounted) setError(msg ?? 'Fetch error');
-			} finally {
-				if (mounted) setLoading(false);
-			}
-		})();
-		return () => {
-			mounted = false;
-		};
-	}, []);
-
-	return (
-
-				<div className="text-center sm:text-left">
-					{loading ? (
-						<p>Loading...</p>
-					) : error ? (
-						<p className="text-red-600">Error: {error}</p>
-					) : (
-						<div>
-							{image && <Image src={image} alt={message ?? "Hello Image"} width={500} height={500} />}
-              {message}
-						</div>
-					)}
-				</div>
-
-	);
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+      <div className="max-w-2xl w-full space-y-8">
+        <div className="p-8 bg-white rounded-lg shadow">
+          {session?.user ? (
+            <div className="text-center">
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                Welcome back!
+              </h1>
+              <p className="text-gray-600 mb-2">
+                You are logged in as:
+              </p>
+              <p className="text-lg font-semibold text-gray-900 mb-6">
+                {session.user.email}
+              </p>
+              {session.user.name && (
+                <p className="text-gray-600 mb-6">
+                  Name: {session.user.name}
+                </p>
+              )}
+              <LogoutButton />
+            </div>
+          ) : (
+            <div>
+              <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
+                Sign In
+              </h1>
+              <LoginForm />
+            </div>
+          )}
+        </div>
+        
+        {session?.user && (
+          <div className="p-8 bg-white rounded-lg shadow">
+            <HelloContent />
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
+
