@@ -17,6 +17,7 @@ services:
       - |
         # Update and install git
         apt-get update && apt-get install -y git
+        apt-get update -y && apt-get install -y openssl
         # npm create cloudflare@latest app --framework=next
         # npm i
         echo "Container ready."

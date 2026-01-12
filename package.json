@@ -13,13 +13,15 @@
 		"upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
 		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
 		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
-		"postinstall": "prisma generate"
+		"postinstall": "prisma generate",
+		"generate": "dotenv -e .dev.vars -- npx prisma generate --no-engine"
 	},
 	"dependencies": {
 		"@neondatabase/serverless": "^1.0.2",
 		"@opennextjs/cloudflare": "^1.14.4",
 		"@prisma/adapter-neon": "6.16.0",
 		"@prisma/client": "6.16.0",
+		"@prisma/extension-accelerate": "^2.0.2",
 		"next": "15.5.9",
 		"react": "19.1.4",
 		"react-dom": "19.1.4",
@@ -33,6 +35,7 @@
 		"@types/react-dom": "^19",
 		"@types/ws": "^8.18.1",
 		"dotenv": "^17.2.3",
+		"dotenv-cli": "^11.0.0",
 		"eslint": "^9",
 		"eslint-config-next": "15.4.6",
 		"prisma": "6.16.0",
