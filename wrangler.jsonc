@@ -17,6 +17,16 @@
 		// see https://opennext.js.org/cloudflare/howtos/image
 		"binding": "IMAGES"
 	},
+  "r2_buckets": [
+    {
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",  // Renamed to match OpenNext's expected cache binding
+      "bucket_name": "next-cloud-cache"
+    },
+    {
+      "binding": "NEXT_CLOUD_R2_BUCKET",  // New binding for your custom image bucket
+      "bucket_name": "next-cloud"  // Replace with the name of the new bucket you create
+    }
+  ],
 	"services": [
 		{
 			// Self-reference service binding, the service name must match the worker name
