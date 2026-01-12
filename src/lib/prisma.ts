@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client/edge' // Use your custom output path
 import { withAccelerate } from "@prisma/extension-accelerate";
 
-const prisma = new PrismaClient({ datasourceUrl: process.env.DATABASE_URL! })
+const prisma = new PrismaClient({ datasourceUrl: process.env.PRISMA_DATABASE_URL! })
 .$extends(withAccelerate())
 export default prisma
 

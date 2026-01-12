@@ -43,7 +43,8 @@ export default function Home() {
 						<p className="text-red-600">Error: {error}</p>
 					) : (
 						<p className="font-medium">
-              <Image src={image || ''} alt={message || 'Hello Image'} width={200} height={200} />
+              <Image src={image || ''} title={message || ''} alt={message || 'Hello Image'} width={200} height={200} />
+              {message}
             </p>
 					)}
 				</div>
