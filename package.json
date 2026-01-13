@@ -4,14 +4,14 @@
 	"private": true,
 	"scripts": {
 		"docker": "docker-compose up -d; docker exec -it nextcloud bash; docker-compose down",
-		"dev": "next dev --turbopack --port 8787",
+		"dev": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
 		"buildopen": "npx prisma generate && opennextjs-cloudflare build",
 		"deploy": "opennextjs-cloudflare deploy",
 		"upload": "opennextjs-cloudflare upload",
-		"preview": "opennextjs-cloudflare preview",
+		"preview": "opennextjs-cloudflare preview --ip 0.0.0.0 --port 3000",
 		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
 		"postinstall": "prisma generate",
 		"generate": "dotenv -e .dev.vars -- npx prisma generate --no-engine"

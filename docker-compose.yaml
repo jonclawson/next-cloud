@@ -5,7 +5,7 @@ services:
     image: node:20-slim
     container_name: nextcloud
     ports: 
-      - "8080:8787"
+      - "8080:3000"
     working_dir: /app
     volumes:
       - ./:/app:delegated
